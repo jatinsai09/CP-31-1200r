@@ -8,12 +8,24 @@ int32_t main() {
     while (t--) {
         int n, x;
         cin >> n;
-        map < int, vector < int >> a;
+    
         set < int > s;
+        vector<int> a(n);
+        int i1 = -1, in1 = -1, c1 = -1, c2 = -1;
         for (int i = 0; i < n; i++) {
             cin >> x;
-            a[x].push_back(i + 1);
+            if (s.find(x) == s.end()) {
+                if (i1 == -1) {
+                    i1 = i;
+                    c1 = x;
+                }
+                else if (in1 == -1 && x != c1) {
+                    in1 = i;
+                    c2 = x;
+                }
+            }
             s.insert(x);
+            a[i] = x;
         }
         if (s.size() == 1) {
             cout << "NO\n";
@@ -21,20 +33,13 @@ int32_t main() {
         }
         cout << "YES\n";
 
-        vector < vector < int >> other;
-        for (auto& i: a) {
-            other.push_back(i.second);
-        }
-        
-        int m = other.size();
-        for (int i = 1; i < m; i++) {
-            for (auto& j: other[i]) {
-                cout << other[0][0] << " " << j << endl;
+        for (int i = 0; i < n; i++) {
+            if (a[i] != c1) {
+                cout << i1 + 1 << " " << i + 1 << "\n";
             }
-        }
-
-        for (int j = 1; j < other[0].size(); j++) {
-            cout << other[0][j] << " " << other[1][0] << endl;
+            else if (i != i1) {
+                cout << in1 + 1 << " " << i + 1 << "\n";
+            }
         }
     }
 }
